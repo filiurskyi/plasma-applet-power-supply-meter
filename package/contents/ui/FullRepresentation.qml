@@ -23,6 +23,10 @@ ColumnLayout {
     // long text (the drain warning, the no-rating hint) wraps instead.
     Layout.minimumWidth: Kirigami.Units.gridUnit * 10
     Layout.preferredWidth: Math.min(implicitWidth, Kirigami.Units.gridUnit * 24)
+    // Plasma reopens the popup at the size it had when last closed, which may
+    // be too short once the drain warning appears. Raising the minimum makes
+    // Plasma grow the popup (libplasma AppletPopup::updateMinSize).
+    Layout.minimumHeight: implicitHeight
     spacing: Kirigami.Units.smallSpacing
 
     PlasmaComponents.Label {
