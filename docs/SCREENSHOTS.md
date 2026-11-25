@@ -39,9 +39,13 @@ charger you want to show.
 
 ## Manual shots
 
-The settings dialog cannot be opened in the headless session: Plasma's
-scripting `showConfigurationInterface()` does nothing there. Take it on your
-own desktop:
+Plasma's scripting `showConfigurationInterface()` does nothing in the
+headless session, so the settings dialog is not part of `make screenshots`.
+`screenshots/breezedark-settings.png` was taken in the sandbox from a
+temporary copy of `package/` whose `main.qml` triggered
+`Plasmoid.internalAction("configure")` from a 2.5 s timer, passed to
+`scripts/sandbox.sh` with `PACKAGE=`; never commit that change. Or take it on
+your own desktop:
 
 1. Right-click the widget, then **Configure Power Supply Meter…**
 2. With the dialog focused, press <kbd>Meta</kbd>+<kbd>Print</kbd> (Spectacle,

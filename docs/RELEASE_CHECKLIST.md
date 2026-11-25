@@ -58,9 +58,10 @@ publish anything.
 - [ ] Commit, then `git tag vX.Y.Z` and push the tag
 - [ ] Release workflow: tag matches metadata, checks pass, the GitHub release
       has the `.plasmoid` and `.sha256`
-- [ ] KDE Store (https://store.kde.org, category "Plasma 6 Extensions →
-      Plasma Widgets"): upload the same `.plasmoid` and update the version,
-      changelog and screenshots. The first upload is a manual
-      store account step. There is no automated upload.
+- [ ] KDE Store (https://store.kde.org/p/2382745): upload the `.plasmoid`
+      from the GitHub release (its MD5 on the Files tab must match), set the
+      file version, and update the product version, changelog and
+      screenshots. There is no automated upload.
 - [ ] Store page text and screenshots: see [STORE_LISTING.md](STORE_LISTING.md)
-- [ ] After publishing, add the store link to README
+- [ ] New uploads can take up to 24 hours to reach Plasma's "Get New…"
+      dialog (sort by Release Date to find them)

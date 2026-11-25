@@ -13,6 +13,13 @@ panel, a drop from 130 W to 60 W is noticed straight away.
 |---|---|
 | ![Gauge and popup in a dark panel](screenshots/breezedark-closeup.png) | ![Gauge and popup in a light panel](screenshots/breeze-closeup.png) |
 
+<details>
+<summary>Settings</summary>
+
+![The General settings page](screenshots/breezedark-settings.png)
+
+</details>
+
 <!-- Regenerate with `make screenshots`; see docs/SCREENSHOTS.md. -->
 
 ## Features
@@ -86,8 +93,8 @@ evidence and per-distribution details.
 ### From the KDE Store
 
 Right-click the panel → **Add or Manage Widgets…** → **Get New…** →
-**Download New Plasma Widgets**, search for "Power Supply Meter". (Not yet
-published.)
+**Download New Plasma Widgets**, search for "Power Supply Meter", or get it
+from its [KDE Store page](https://store.kde.org/p/2382745).
 
 ### Manually
 

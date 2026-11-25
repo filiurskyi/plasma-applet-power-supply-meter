@@ -1,13 +1,15 @@
 # KDE Store listing
 
-Text for the product page on <https://store.kde.org>. Keep it in sync with
-README when features change.
+Text for the product page, <https://store.kde.org/p/2382745> (edit it from
+opendesktop.org, account `flrsk`). Keep it in sync with README when features
+change.
 
 **Name:** Power Supply Meter
 
-**Category:** Plasma 6 widgets (under Plasma 6 Extensions)
+**Category:** Plasma 6 Monitoring (under Plasma 6 Extensions)
 
-**License:** GPL-3.0-or-later
+**License:** GPL-3.0-or-later (the store's closest option is "GPLv3"; the
+description states "or later")
 
 **Source:** https://github.com/filiurskyi/plasma-applet-power-supply-meter
 
@@ -44,7 +46,7 @@ Details: https://github.com/filiurskyi/plasma-applet-power-supply-meter/blob/mai
 
 1. `screenshots/breezedark-closeup.png`
 2. `screenshots/breeze-closeup.png`
-3. The settings dialog, captured by hand (see SCREENSHOTS.md)
+3. `screenshots/breezedark-settings.png`
 4. `screenshots/breezedark-panel.png` (full desktop)
 
 ## Changelog field
