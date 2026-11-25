@@ -10,7 +10,7 @@ missing tools. Nothing is ever installed automatically.
 | install, package | `kpackagetool6`, `python3` (+ `msgfmt` once `po/*.po` exist) |
 | run in a window | `plasmoidviewer` (plasma-sdk) or `plasmawindowed` |
 | `make check` | `qmllint`, `qmlformat`, `qmltestrunner` (+ QtTest QML module), `xmllint`, `shellcheck`, `reuse`, gettext |
-| `make screenshots` | `kwin_wayland`, `plasmashell`, `spectacle`, `qdbus6`, `dbus-run-session`, `lookandfeeltool` |
+| `make smoke`, `make screenshots` | `kwin_wayland`, `plasmashell`, `spectacle`, `qdbus6`, `dbus-run-session`, `lookandfeeltool` |
 
 Qt tools are found on `PATH` under their plain name, with a `6` or `-qt6`
 suffix, or in `qtpaths6 --query QT_HOST_BINS` and `/usr/lib/qt6/bin`.
@@ -72,21 +72,23 @@ hardware.
 | Static | QML lint and format, kcfg XML, metadata JSON, shellcheck, REUSE, translation template up to date | `make lint format-check translations-check reuse` |
 | Automated | metadata and schema consistency, settings pages against schema, package contents, reproducibility, tag check, `init.py` | `python3 -m unittest discover -s tests -v` |
 | Automated (QML) | sysfs parser; gauge clamping, click and keyboard toggling, panel sizing, accessibility | `qmltestrunner -input tests/qml` (offscreen) |
-| Runtime smoke | widget loads in a real plasmashell, popup opens | `make screenshots` and look at the images; logs stay in the sandbox with `KEEP_SANDBOX=1` |
+| Runtime smoke | the release `.plasmoid` installs and loads in a real plasmashell. Checked placements: 24 and 64 px panels, a vertical panel, the desktop, and two instances with different settings. Fails on any widget warning in the log | `make smoke` (headless; screenshots in `build/smoke/` for review). Not in CI: it needs KWin and plasmashell |
 | Manual | see the matrix below | |
 
 ### Manual test matrix
 
 Run before each release and note the Plasma version and session type used.
+Items marked *(smoke)* are covered by `make smoke`; review its screenshots
+instead of repeating them by hand.
 
 - [ ] Fresh install from the `.plasmoid`, add to panel, remove, uninstall
 - [ ] Upgrade from the previous release keeps settings
 - [ ] `make restart-plasma`: widget comes back with its settings
-- [ ] Horizontal panel at 24, 36 and 64 px; vertical panel
-- [ ] On the desktop: gauge scales with the widget size, popup opens
+- [ ] Horizontal panel at 24, 36 and 64 px; vertical panel *(smoke)*
+- [ ] On the desktop: gauge scales with the widget size *(smoke)*, popup opens
 - [ ] Breeze light, Breeze dark, one third-party Plasma theme, a custom accent colour
 - [ ] Fractional scaling (125 % or 150 %): ring and label are crisp, not clipped
-- [ ] Two instances with different full scale and colours stay independent
+- [ ] Two instances with different full scale and colours stay independent *(smoke)*
 - [ ] Settings: Apply, Cancel, Defaults, reopen; custom font survives reopening
 - [ ] Keyboard: Tab to the gauge, focus ring visible, Space or Enter toggles the popup
 - [ ] Screen reader (Orca) announces name and status

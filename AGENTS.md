@@ -66,8 +66,8 @@ repository. Details live in `docs/`; this file only lists what you must do.
 - Never weaken, skip or filter a check to make it pass. That includes
   qmllint filters, `REUSE-Ignore` markers and test assertions. If a check is
   wrong, explain why and ask.
-- Changes visible in Plasma also need a run: `make run`, or
-  `make screenshots` for a headless session. Say what you verified
+- Changes visible in Plasma also need a run: `make smoke` (headless, fails on
+  widget warnings; look at the screenshots in `build/smoke/`), or `make run`. Say what you verified
   visually and what you did not.
 
 ## Map

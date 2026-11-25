@@ -29,6 +29,7 @@ help:
 	@echo "  package        build dist/<name>-<version>.plasmoid and .sha256"
 	@echo "  reuse          REUSE licensing compliance"
 	@echo "  check          everything CI runs"
+	@echo "  smoke          runtime test of the built .plasmoid in a headless Plasma session"
 	@echo "  screenshots    light/dark panel and popup shots in a headless session"
 	@echo "  clean          remove build/ and dist/"
 
@@ -96,6 +97,9 @@ reuse:
 
 check: format-check lint translations-check reuse test package
 
+smoke:
+	scripts/smoke.sh
+
 screenshots:
 	scripts/screenshots.sh
 
@@ -103,4 +107,4 @@ clean:
 	rm -rf build dist
 
 .PHONY: help doctor init install upgrade link uninstall run restart-plasma lint format format-check test \
-	translations translations-check package reuse check screenshots clean
+	translations translations-check package reuse check smoke screenshots clean

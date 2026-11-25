@@ -11,7 +11,8 @@ SIZE=1920x1080 PANEL_HEIGHT=56 make screenshots
 
 ## How it works
 
-1. `scripts/screenshots.sh` creates a temporary directory and points
+1. `scripts/sandbox.sh`, which `scripts/screenshots.sh` and `scripts/smoke.sh` share,
+   creates a temporary directory and points
    `XDG_CONFIG_HOME`, `XDG_DATA_HOME`, `XDG_CACHE_HOME` and `XDG_STATE_HOME`
    into it. It then installs the widget there with `kpackagetool6`.
 2. `dbus-run-session` starts a private session bus. In it,

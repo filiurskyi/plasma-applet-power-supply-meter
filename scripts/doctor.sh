@@ -35,13 +35,14 @@ check dev reuse
 check dev xgettext
 check dev msgmerge
 check dev msgfmt
-echo "Screenshots (make screenshots):"
+echo "Smoke test and screenshots (make smoke, make screenshots):"
 check shots kwin_wayland
 check shots plasmashell
 check shots spectacle
 check shots qdbus6
 check shots dbus-run-session
 check shots lookandfeeltool
+check shots kscreen-doctor
 
 if [ -z "$missing" ]; then
     echo "doctor: everything is available"
