@@ -53,4 +53,19 @@ for theme in $themes; do
     sleep 1
     [ -n "${KEEP_SANDBOX:-}" ] || rm -rf "$sandbox" 2>/dev/null || true
 done
+# Close-ups of the panel corner with the popup open: the gauge is tiny in a
+# full-desktop shot. Optional: needs Python's PIL (python3-pil / python-pillow).
+if python3 -c 'import PIL' 2>/dev/null; then
+    for shot in "$out"/*-popup.png; do
+        python3 -I - "$shot" "${shot%-popup.png}-closeup.png" <<'PY'
+import sys
+from PIL import Image
+image = Image.open(sys.argv[1])
+width, height = image.size
+image.crop((max(0, width - 600), max(0, height - 200), width, height)).save(sys.argv[2])
+PY
+    done
+else
+    echo "screenshots: python3 PIL not found, skipping close-ups"
+fi
 ls -1 "$out"

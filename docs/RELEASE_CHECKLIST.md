@@ -62,4 +62,5 @@ publish anything.
       Plasma Widgets"): upload the same `.plasmoid` and update the version,
       changelog and screenshots. The first upload is a manual
       store account step. There is no automated upload.
+- [ ] Store page text and screenshots: see [STORE_LISTING.md](STORE_LISTING.md)
 - [ ] After publishing, add the store link to README

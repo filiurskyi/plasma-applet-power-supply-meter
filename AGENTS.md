@@ -82,5 +82,6 @@ repository. Details live in `docs/`; this file only lists what you must do.
 - **Compatibility:** distributions, required modules and hardware, with
   sources, are in `docs/COMPATIBILITY.md`. Update it when adding an import
   or a sysfs attribute.
-- **Releases:** `docs/RELEASE_CHECKLIST.md`.
+- **Releases:** `docs/RELEASE_CHECKLIST.md`; KDE Store page text in
+  `docs/STORE_LISTING.md`.
 - **Screenshots:** `docs/SCREENSHOTS.md`.

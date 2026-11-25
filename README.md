@@ -9,8 +9,11 @@ negotiate much less than 130 W. Under heavy load the laptop then quietly
 drains its battery while plugged in. With the gauge always visible in the
 panel, a drop from 130 W to 60 W is noticed straight away.
 
-<!-- Screenshots: generate with `make screenshots`, see docs/SCREENSHOTS.md.
-![Power Supply Meter in a dark panel](screenshots/breezedark-panel.png) -->
+| Breeze Dark | Breeze |
+|---|---|
+| ![Gauge and popup in a dark panel](screenshots/breezedark-closeup.png) | ![Gauge and popup in a light panel](screenshots/breeze-closeup.png) |
+
+<!-- Regenerate with `make screenshots`; see docs/SCREENSHOTS.md. -->
 
 ## Features
 

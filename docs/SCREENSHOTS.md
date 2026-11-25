@@ -24,6 +24,10 @@ SIZE=1920x1080 PANEL_HEIGHT=56 make screenshots
    4. takes `<theme>-panel.png` with `spectacle --background --fullscreen`;
    5. opens the popup through the widget's global shortcut (via
       kglobalaccel's D-Bus `invokeShortcut`), then takes `<theme>-popup.png`.
+   6. If Python's PIL is installed, the script also crops
+      `<theme>-closeup.png` (the panel corner with the popup open) from each
+      popup shot. The README uses these crops, because the gauge is tiny in a
+      full-desktop shot.
 4. Afterwards the script stops the daemons D-Bus started inside the sandbox
    (portal, ksecretd, activity manager) and deletes the directory. Set
    `KEEP_SANDBOX=1` to keep it. `state/plasmashell.log` then has the QML
