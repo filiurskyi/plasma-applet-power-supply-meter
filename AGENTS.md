@@ -7,6 +7,16 @@ repository. Details live in `docs/`; this file only lists what you must do.
 
 - Commit messages are a single title line only. Never add a body,
   description, trailers or `Co-Authored-By` lines.
+- The title follows [Conventional Commits](https://www.conventionalcommits.org/):
+  `<type>(<optional scope>): <description>`.
+  - Types: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`,
+    `chore`, `style`, `revert`.
+  - Scope is optional, short and lower-case, naming the area: `gauge`,
+    `popup`, `config`, `parser`, `i18n`, `package`, `scripts`, `agents`.
+  - Description: lower-case imperative ("add", not "added"), no trailing
+    period, whole title at most 72 characters.
+  - Breaking changes (renamed setting keys, dropped Plasma versions) use `!`
+    after the type or scope, e.g. `feat(config)!: …`.
 - Never push. The maintainer pushes manually. This also covers tags,
   branches and force-pushes.
 

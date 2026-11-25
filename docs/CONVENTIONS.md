@@ -70,6 +70,7 @@ The "Verified" notes say how each rule was checked, on 2026-11-25.
 | Content follows the KDE Store publishing terms (own work or compatible licence, no malware, accurate description) | Required | [store.kde.org/terms/publishing](https://store.kde.org/terms/publishing) |
 | Semantic versioning; tags `vX.Y.Z` equal to `metadata.json` Version | Project | enforced by `scripts/package.py check-tag` in the release workflow |
 | Keep a Changelog format | Community | CHANGELOG.md |
+| Commit titles in Conventional Commits style (`type(scope): description`), title line only | Project | AGENTS.md; Dependabot uses the `ci` prefix |
 | GitHub Actions pinned to commit SHAs, least-privilege `permissions` | Official (GitHub) | GitHub security hardening guide; Dependabot keeps the pins current |
 | No automated KDE Store upload | Project | no supported, documented upload API was found; publish by hand |
 
