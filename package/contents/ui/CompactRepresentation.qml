@@ -99,12 +99,19 @@ MouseArea {
             anchors.fill: parent
             text: compact.text
             color: compact.textColor
-            font: compact.labelFont
+            // Start large and let HorizontalFit shrink the text to the ring, so
+            // the label also fills a big gauge on the desktop. In panels the
+            // ring's width is the limit, as before.
+            font.family: compact.labelFont.family
+            font.styleName: compact.labelFont.styleName
+            font.weight: compact.labelFont.weight
+            font.italic: compact.labelFont.italic
+            font.pixelSize: Math.max(1, Math.round(chart.height * 0.5))
             textFormat: Text.PlainText
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             fontSizeMode: Text.HorizontalFit
-            minimumPointSize: Kirigami.Theme.smallFont.pointSize * 0.8
+            minimumPixelSize: Math.round(Kirigami.Units.gridUnit * 0.5)
             maximumLineCount: 1
             // Outline in the opposite brightness of the text, so it stays
             // readable over the ring and any panel background.

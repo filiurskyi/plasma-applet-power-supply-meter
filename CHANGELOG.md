@@ -49,5 +49,7 @@ First public release.
   limit.
 - A charger whose rating cannot be read now counts as external power instead
   of "No external power".
+- The gauge label scales with the gauge, so it fills a large gauge on the
+  desktop.
 - The popup fits its content. If a remembered popup size is too short for the
   content, the popup grows.
