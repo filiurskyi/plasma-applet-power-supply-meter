@@ -1,0 +1,248 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Power Supply Meter contributors
+# This file is distributed under the same license as the Power Supply Meter package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Power Supply Meter 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/filiurskyi/plasma-applet-power-supply-meter/issues\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: contents/config/config.qml:9
+msgctxt "@title config page"
+msgid "General"
+msgstr ""
+
+#: contents/config/config.qml:14
+msgctxt "@title config page"
+msgid "Appearance"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:37
+msgctxt "@label:group"
+msgid "Font:"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:38
+msgctxt "@option:radio"
+msgid "System default"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:48
+msgctxt "@option:radio"
+msgid "Custom"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:58
+msgctxt "@action:button"
+msgid "Choose Font…"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:69
+msgctxt "@info %1 font family, %2 font style"
+msgid "%1 %2"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:80
+msgctxt "@label"
+msgid "Gauge colour:"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:84 contents/ui/configAppearance.qml:100
+#: contents/ui/configAppearance.qml:116
+msgctxt "@option:check"
+msgid "Custom"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:85
+msgctxt "@option:check accessible"
+msgid "Custom gauge colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:91
+msgctxt "@title:window"
+msgid "Choose Gauge Colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:92
+msgctxt "@label accessible"
+msgid "Gauge colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:96
+msgctxt "@label"
+msgid "Track colour:"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:101
+msgctxt "@option:check accessible"
+msgid "Custom track colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:107
+msgctxt "@title:window"
+msgid "Choose Track Colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:108
+msgctxt "@label accessible"
+msgid "Track colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:112
+msgctxt "@label"
+msgid "Text colour:"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:117
+msgctxt "@option:check accessible"
+msgid "Custom text colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:123
+msgctxt "@title:window"
+msgid "Choose Text Colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:124
+msgctxt "@label accessible"
+msgid "Text colour"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:129
+msgctxt "@info"
+msgid "Colours that are not customised follow the Plasma theme."
+msgstr ""
+
+#: contents/ui/configAppearance.qml:138
+msgctxt "@label"
+msgid "Label:"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:139
+msgctxt "@option:check"
+msgid "Draw outline for readability"
+msgstr ""
+
+#: contents/ui/configAppearance.qml:150
+msgctxt "@title:window"
+msgid "Choose a Font"
+msgstr ""
+
+#: contents/ui/configGeneral.qml:20
+msgctxt "@label:spinbox"
+msgid "Full scale:"
+msgstr ""
+
+#: contents/ui/configGeneral.qml:28
+msgctxt "@label:spinbox accessible"
+msgid "Full scale in watts"
+msgstr ""
+
+#: contents/ui/configGeneral.qml:31
+msgctxt "@label unit after a spin box"
+msgid "W"
+msgstr ""
+
+#: contents/ui/configGeneral.qml:37
+msgctxt "@info"
+msgid "Set this to the rating of your charger, for example 65 W or 100 W."
+msgstr ""
+
+#: contents/ui/configGeneral.qml:45
+msgctxt "@label:spinbox"
+msgid "Update interval:"
+msgstr ""
+
+#: contents/ui/configGeneral.qml:53
+msgctxt "@label:spinbox accessible"
+msgid "Update interval in seconds"
+msgstr ""
+
+#: contents/ui/configGeneral.qml:56
+msgctxt "@label unit after a spin box"
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: contents/ui/configGeneral.qml:63
+msgctxt "@label:checkbox"
+msgid "Battery:"
+msgstr ""
+
+#: contents/ui/configGeneral.qml:64
+msgctxt "@option:check"
+msgid "Warn when the battery drains while plugged in"
+msgstr ""
+
+#: contents/ui/main.qml:53
+msgctxt "@label power in watts, %1 is a number"
+msgid "%1 W"
+msgstr ""
+
+#: contents/ui/main.qml:57
+msgctxt "@info %1 supply name, %2 volts, %3 amps, %4 watts"
+msgid "%1: %2 V × %3 A = %4 W"
+msgstr ""
+
+#: contents/ui/main.qml:64
+msgctxt "@info"
+msgid "Battery is discharging while plugged in"
+msgstr ""
+
+#: contents/ui/main.qml:65
+msgctxt "@info %1 is a number of watts"
+msgid "Battery is discharging at %1 W while plugged in"
+msgstr ""
+
+#: contents/ui/main.qml:69
+msgctxt "@info"
+msgid ""
+"This computer does not report the charger's rating to Linux, so the wattage cannot be shown. The "
+"drain warning still works."
+msgstr ""
+
+#: contents/ui/main.qml:73
+msgctxt "@info"
+msgid "No external power"
+msgstr ""
+
+#: contents/ui/main.qml:75
+msgctxt "@info"
+msgid "On external power (supply rating not reported)"
+msgstr ""
+
+#: contents/ui/main.qml:76
+msgctxt "@info %1 and %2 are power values with units"
+msgid "%1 of %2"
+msgstr ""
+
+#: contents/ui/main.qml:80
+msgctxt "@title tooltip"
+msgid "Power Supply"
+msgstr ""
+
+#: contents/ui/main.qml:115
+msgctxt "@label compact gauge, %1 is a number of watts"
+msgid "%1W"
+msgstr ""
+
+#: contents/ui/main.qml:126
+msgctxt "@info accessible description, %1 is the drain warning, %2 the supply status"
+msgid "%1. %2"
+msgstr ""
+
+#: contents/ui/main.qml:139
+msgctxt "@action"
+msgid "Show Energy Information…"
+msgstr ""

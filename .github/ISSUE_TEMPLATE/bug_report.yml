@@ -1,0 +1,57 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Add the widget to a horizontal panel
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: widget-version
+    attributes:
+      label: Widget version
+      description: Shown in the widget's "About" settings page or in metadata.json.
+    validations:
+      required: true
+  - type: input
+    id: plasma
+    attributes:
+      label: Plasma, Frameworks and Qt versions
+      description: Output of `plasmashell --version` and `kinfo` (or System Settings → About this System).
+    validations:
+      required: true
+  - type: dropdown
+    id: session
+    attributes:
+      label: Session type
+      options: [Wayland, X11]
+    validations:
+      required: true
+  - type: dropdown
+    id: placement
+    attributes:
+      label: Where is the widget?
+      options: [Horizontal panel, Vertical panel, Desktop, System tray]
+  - type: textarea
+    id: supplies
+    attributes:
+      label: Power supply data
+      description: Output of `grep -sH . /sys/class/power_supply/*/{online,voltage_max,current_max,type}` (no personal data).
+      render: text
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: e.g. `journalctl --user -b -g powersupplymeter`
+      render: text

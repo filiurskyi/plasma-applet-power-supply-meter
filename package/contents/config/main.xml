@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    SPDX-FileCopyrightText: 2026 Andrii Filiurskyi
+    SPDX-License-Identifier: GPL-3.0-or-later
+-->
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name=""/>
+
+  <group name="General">
+    <entry name="maxWatts" type="Int">
+      <label>Power shown as a full gauge, in watts.</label>
+      <default>130</default>
+      <min>1</min>
+      <max>500</max>
+    </entry>
+    <entry name="intervalSeconds" type="Int">
+      <label>How often the supply is read, in seconds. The executable engine's minimum is 1 s.</label>
+      <default>2</default>
+      <min>1</min>
+      <max>60</max>
+    </entry>
+    <entry name="warnWhenDraining" type="Bool">
+      <label>Colour the gauge and request attention when the battery discharges while an external supply is online.</label>
+      <default>true</default>
+    </entry>
+  </group>
+
+  <group name="Appearance">
+    <entry name="autoFont" type="Bool">
+      <label>Use the Plasma default font.</label>
+      <default>true</default>
+    </entry>
+    <!-- The font entries mirror the Digital Clock applet so the chosen style
+         survives reopening the font dialog. Size is not stored: the label
+         always scales to fit the gauge. -->
+    <entry name="fontFamily" type="String">
+      <label>Font family. The system font is used if empty.</label>
+      <default></default>
+    </entry>
+    <entry name="boldText" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="italicText" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="fontWeight" type="Int">
+      <default>400</default>
+    </entry>
+    <entry name="fontStyleName" type="String">
+      <default></default>
+    </entry>
+
+    <entry name="customGaugeColor" type="Bool">
+      <label>Use gaugeColor instead of the theme highlight colour.</label>
+      <default>false</default>
+    </entry>
+    <entry name="gaugeColor" type="Color">
+      <default>#3daee9</default>
+    </entry>
+    <entry name="customTrackColor" type="Bool">
+      <label>Use trackColor instead of the theme-derived track colour.</label>
+      <default>false</default>
+    </entry>
+    <entry name="trackColor" type="Color">
+      <default>#4d4d4d</default>
+    </entry>
+    <entry name="customTextColor" type="Bool">
+      <label>Use textColor instead of the theme text colour.</label>
+      <default>false</default>
+    </entry>
+    <entry name="textColor" type="Color">
+      <default>#ffffff</default>
+    </entry>
+    <entry name="textOutline" type="Bool">
+      <label>Draw a contrasting outline around the gauge label.</label>
+      <default>true</default>
+    </entry>
+  </group>
+</kcfg>

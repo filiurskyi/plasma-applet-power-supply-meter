@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Andrii Filiurskyi"
+            }
+        ],
+        "BugReportUrl": "https://github.com/filiurskyi/plasma-applet-power-supply-meter/issues",
+        "Category": "System Information",
+        "Description": "Circular gauge of the power the connected supply (USB-C PD / AC) can deliver",
+        "EnabledByDefault": true,
+        "Icon": "battery-ac-adapter",
+        "Id": "io.github.filiurskyi.powersupplymeter",
+        "License": "GPL-3.0-or-later",
+        "Name": "Power Supply Meter",
+        "Version": "1.0.0",
+        "Website": "https://github.com/filiurskyi/plasma-applet-power-supply-meter"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

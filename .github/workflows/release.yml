@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Tag matches metadata.json
+        run: python3 scripts/package.py check-tag "$GITHUB_REF_NAME"
+
+      # Rebuilt from the tagged commit rather than reusing the CI artifact,
+      # so the release is exactly what the tag describes. The archive is
+      # reproducible, so this matches CI byte for byte.
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install --yes --no-install-recommends gettext
+
+      - name: Build and verify
+        run: python3 scripts/package.py build
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          notes=$(awk -v v="$version" '$0 ~ "^## \\[" v "\\]" {found=1; next} found && /^## \[/ {exit} found' CHANGELOG.md)
+          gh release create "$GITHUB_REF_NAME" dist/*.plasmoid dist/*.plasmoid.sha256 \
+            --title "$GITHUB_REF_NAME" --notes "${notes:-See CHANGELOG.md}" --verify-tag

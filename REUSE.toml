@@ -1,0 +1,25 @@
+version = 1
+
+# Files that cannot carry an SPDX header (JSON, binary images) or are
+# documentation and repository metadata.
+[[annotations]]
+path = [
+  "package/metadata.json",
+  "**/*.md",
+  "screenshots/**",
+  "po/**",
+]
+SPDX-FileCopyrightText = "2026 Andrii Filiurskyi"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Trivial configuration files.
+[[annotations]]
+path = [
+  ".editorconfig",
+  ".gitignore",
+  ".github/**",
+  ".qmlformat.ini",
+  ".shellcheckrc",
+]
+SPDX-FileCopyrightText = "2026 Andrii Filiurskyi"
+SPDX-License-Identifier = "CC0-1.0"

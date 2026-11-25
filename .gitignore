@@ -1,0 +1,13 @@
+# Build output (scripts/package.py, scripts/translations.sh)
+/build/
+/dist/
+# Compiled catalogs are generated into the staging dir, never into package/
+*.mo
+# Editor and tool caches
+*.qmlc
+*.jsc
+__pycache__/
+.cache/
+.vscode/
+.idea/
+*~
