@@ -3,7 +3,8 @@
     "KPlugin": {
         "Authors": [
             {
-                "Name": "Andrii Filiurskyi"
+                "Name": "Andrii Filiurskyi",
+                "Website": "https://filiurskyi.github.io"
             }
         ],
         "BugReportUrl": "https://github.com/filiurskyi/plasma-applet-power-supply-meter/issues",
