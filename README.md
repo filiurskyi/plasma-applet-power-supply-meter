@@ -1,13 +1,11 @@
 # Power Supply Meter
 
-A KDE Plasma 6 widget that shows, as a small gauge in your panel, how much
-power the connected charger can deliver: the negotiated USB-C Power Delivery
-contract (`voltage_max × current_max`), not how much the laptop is using.
+A KDE Plasma 6 panel gauge showing how much power the connected charger can
+deliver: the negotiated USB-C Power Delivery contract
+(`voltage_max × current_max`), not what the laptop draws.
 
-**Why:** a flaky Thunderbolt dock or cable can make a 130 W charger
-negotiate much less than 130 W. Under heavy load the laptop then quietly
-drains its battery while plugged in. With the gauge always visible in the
-panel, a drop from 130 W to 60 W is noticed straight away.
+A flaky dock or cable can make a 130 W charger negotiate 60 W. Under load the
+laptop then drains its battery while plugged in.
 
 | Breeze Dark | Breeze |
 |---|---|
@@ -26,81 +24,38 @@ panel, a drop from 130 W to 60 W is noticed straight away.
 
 - Circular gauge in horizontal and vertical panels or on the desktop.
 - Tooltip and popup with each supply's voltage, current and wattage.
-- Warns, with a red gauge, when the battery drains while plugged in.
-- Configurable full scale (set it to your charger's rating, e.g. 65 W or 100 W)
-  and update interval.
-- Optional custom label font and gauge, track and text colours; by default it
-  follows your Plasma theme and accent colour.
-- Keyboard accessible; works with screen readers.
-- No network access, no telemetry, no root privileges.
+- Gauge turns red when the battery drains while plugged in.
+- Follows the Plasma theme; font and colours can be overridden.
+- Keyboard and screen-reader accessible.
+- No network access, no telemetry, no root.
 
 ## Requirements
 
-The widget is plain QML with no compiled code, so it is not tied to a
-distribution. It needs three things:
+- KDE Plasma 6.0 or later.
+- A `power_supply` that reports `online`, `voltage_max` and `current_max`:
 
-1. **KDE Plasma 6.0 or later.** Plasma 5 is not supported. That rules out
-   Kubuntu 24.04 LTS and Debian 12, which ship Plasma 5.27.
-2. **Hardware and a kernel that report the charger's rating.** That means a
-   `power_supply` with `online`, `voltage_max` and `current_max`. On most
-   modern laptops this comes from the UCSI driver (`ucsi_acpi`,
-   `ucsi-source-psy-*` devices); USB-C PD ports driven by TCPM
-   (`tcpm-source-psy-*`) work too. Check yours:
+  ```sh
+  grep -sH . /sys/class/power_supply/*/{online,voltage_max,current_max}
+  ```
 
-   ```sh
-   grep -sH . /sys/class/power_supply/*/{online,voltage_max,current_max}
-   ```
+  Without `voltage_max` and `current_max` the widget shows only that external
+  power is connected; the drain warning still works.
+- `kinfocenter`, optional, for the "Show Energy Information…" action.
 
-   If no supply shows both `voltage_max` and `current_max`, the widget can
-   only tell you that you are on external power. The drain warning still
-   works.
-3. **Plasma's standard QML modules:** Qt Quick, Qt.labs.platform, Kirigami,
-   KCMUtils, KQuickControls, KQuickCharts and Plasma5Support. A normal
-   Plasma desktop install already includes all of them, plus `/bin/sh` and
-   `grep`. Only if you assembled Plasma from individual packages on Debian
-   or Ubuntu might you need:
-
-   ```sh
-   sudo apt install qml6-module-qt-labs-platform qml6-module-org-kde-kcmutils \
-     qml6-module-org-kde-kquickcontrols qml6-module-org-kde-quickcharts \
-     qml6-module-org-kde-plasma-plasma5support
-   ```
-
-`kinfocenter` is optional; it powers the "Show Energy Information…" action.
-If the panel shows an error naming a missing module instead of the gauge,
-[docs/COMPATIBILITY.md](docs/COMPATIBILITY.md#if-the-widget-shows-an-error-instead-of-the-gauge)
-lists the package to install.
-
-| Distribution | Works with a standard Plasma install |
-|---|---|
-| Kubuntu 25.10, 26.04; KDE neon; Debian 13 | yes |
-| Fedora KDE, Fedora Kinoite | yes |
-| openSUSE Tumbleweed, Leap 16 | yes |
-| Arch (and Manjaro, EndeavourOS, CachyOS) | yes |
-| NixOS (`services.desktopManager.plasma6`), Gentoo (`plasma-meta`), Void (`kde-plasma`) | yes |
-| Alpine | the widget loads, but the stock kernels lack UCSI, so no wattage is shown |
-| Kubuntu 24.04, Debian 12 | no (Plasma 5) |
-| Chromebooks | wattage via `voltage_max_design` (untested on hardware) |
-| Apple Silicon | no wattage: the driver does not expose a rating |
-
-Only Plasma 6.6.7 on Kubuntu 26.04 (Wayland) has actually been tested. The
-other rows come from each distribution's package dependencies and kernel
-configuration. [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) has the
-evidence and per-distribution details.
+QML modules, packages, distributions and hardware:
+[docs/COMPATIBILITY.md](docs/COMPATIBILITY.md). If the panel shows an error
+instead of the gauge, see
+[its fix list](docs/COMPATIBILITY.md#if-the-widget-shows-an-error-instead-of-the-gauge).
 
 ## Installation
 
-### From the KDE Store
+**KDE Store:** right-click the panel → **Add or Manage Widgets…** →
+**Get New…** → **Download New Plasma Widgets**, search for "Power Supply
+Meter". [Store page](https://store.kde.org/p/2382745).
 
-Right-click the panel → **Add or Manage Widgets…** → **Get New…** →
-**Download New Plasma Widgets**, search for "Power Supply Meter", or get it
-from its [KDE Store page](https://store.kde.org/p/2382745).
-
-### Manually
-
-Download `power-supply-meter-<version>.plasmoid` from the
-[releases](https://github.com/filiurskyi/plasma-applet-power-supply-meter/releases),
-optionally check it against the `.sha256` file, then:
+**Manually:** download `power-supply-meter-<version>.plasmoid` (and its
+`.sha256`) from the
+[releases](https://github.com/filiurskyi/plasma-applet-power-supply-meter/releases):
 
 ```sh
 kpackagetool6 --type Plasma/Applet --install power-supply-meter-<version>.plasmoid
@@ -108,54 +63,51 @@ kpackagetool6 --type Plasma/Applet --install power-supply-meter-<version>.plasmo
 kpackagetool6 --type Plasma/Applet --upgrade power-supply-meter-<version>.plasmoid
 ```
 
-No root access is needed; the widget is installed into
-`~/.local/share/plasma/plasmoids/`. Then add "Power Supply Meter" to a panel.
+It installs into `~/.local/share/plasma/plasmoids/`.
 
 ## Configuration
 
-Right-click the widget → **Configure Power Supply Meter…**
+Right-click the widget → **Configure Power Supply Meter…** Settings are per
+widget instance.
 
-- **General:** full scale in watts (default 130 W), update interval (default 2 s),
-  warning when the battery drains while plugged in (default on; when off,
-  the tooltip and popup still mention the drain but the gauge colour and tray
-  visibility do not change).
-- **Appearance:** system or custom font; custom gauge, track and text colours;
-  outline around the label.
+| Setting | Default | Range |
+|---|---|---|
+| Full scale (your charger's rating) | 130 W | 1–500 W |
+| Update interval | 2 s | 1–60 s |
+| Warn when the battery drains while plugged in | on | |
+| Font | system | |
+| Gauge, track and text colours | theme | |
+| Label outline | on | |
 
-Settings are stored per widget instance by Plasma, so several gauges can be
-configured differently.
+With the warning off, the tooltip and popup still report the drain; the gauge
+colour and tray visibility stay unchanged.
 
 ## Known limitations
 
-- The value is what the charger *offers*, not what the laptop draws.
-- Hardware that does not expose `voltage_max`/`current_max` shows no wattage.
-- The gauge cannot show which voltage/current levels the charger supports
-  overall; Linux exposes those only on some hardware.
-- The drain warning relies on the battery reporting `Discharging`. The
-  discharge power is shown only if the battery reports `power_now` or
-  `current_now` and `voltage_now`. The warning appears after two polls
-  (default 4 s), so very short drains are not shown.
-- Reading sysfs needs a short-lived `grep` process every interval (default
-  2 s), because neither Plasma nor UPower exposes the negotiated rating.
+- Shows what the charger offers, not what the laptop draws.
+- No wattage on hardware without `voltage_max`/`current_max`.
+- The drain warning needs the battery to report `Discharging` and appears
+  after two consecutive polls. Discharge power needs `power_now`, or
+  `current_now` and `voltage_now`.
+- Each poll spawns a `grep` process: neither Plasma nor UPower exposes the
+  negotiated rating.
 
 ## Development
 
 ```sh
-make doctor     # which tools are installed and how to get the rest
+make doctor     # which tools are installed
 make link       # symlink package/ into ~/.local/share/plasma/plasmoids
 make check      # everything CI runs
 make package    # dist/power-supply-meter-<version>.plasmoid
 ```
 
-See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the full workflow,
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the widget works and
-[CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md),
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md),
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
-This repository also works as a template for new Plasma widgets: run
-`make init` in a fresh copy.
+To reuse the repository as a template for a new widget, run `make init` in a
+fresh copy.
 
 ## License
 
-GPL-3.0-or-later, see [LICENSE](LICENSE). Files carry SPDX headers and the
-repository follows the [REUSE](https://reuse.software/) specification.
-Copyright © 2026 Andrii Filiurskyi.
+GPL-3.0-or-later, see [LICENSE](LICENSE). Copyright © 2026 Andrii Filiurskyi.

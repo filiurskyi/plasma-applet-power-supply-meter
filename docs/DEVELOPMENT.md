@@ -2,130 +2,120 @@
 
 ## Tools
 
-`make doctor` lists what is installed and prints install commands for
-missing tools. Nothing is ever installed automatically.
+`make doctor` lists installed tools and prints install commands for missing
+ones.
 
 | Task | Needs |
 |---|---|
-| install, package | `kpackagetool6`, `python3` (+ `msgfmt` once `po/*.po` exist) |
-| run in a window | `plasmoidviewer` (plasma-sdk) or `plasmawindowed` |
+| install, package | `kpackagetool6`, `python3`, `msgfmt` if `po/*.po` exist |
+| `make run` | `plasmoidviewer` (plasma-sdk), else `plasmawindowed` with the installed copy |
 | `make check` | `qmllint`, `qmlformat`, `qmltestrunner` (+ QtTest QML module), `xmllint`, `shellcheck`, `reuse`, gettext |
-| `make smoke`, `make screenshots` | `kwin_wayland`, `plasmashell`, `spectacle`, `qdbus6`, `dbus-run-session`, `lookandfeeltool` |
+| `make smoke`, `make screenshots` | `kwin_wayland`, `plasmashell`, `spectacle`, `qdbus6`, `dbus-run-session`, `lookandfeeltool`; optional `kscreen-doctor` (150 % shot), Python PIL (close-ups) |
 
-Qt tools are found on `PATH` under their plain name, with a `6` or `-qt6`
-suffix, or in `qtpaths6 --query QT_HOST_BINS` and `/usr/lib/qt6/bin`.
-Set `QT_BIN=/path` to override.
-
-On Kubuntu 26.04:
-
-```sh
-sudo apt install plasma-sdk qt6-declarative-dev-tools qml6-module-qttest gettext libxml2-utils shellcheck reuse
-```
+Qt tools are looked up on `PATH` as `<tool>`, `<tool>6` or `<tool>-qt6`,
+then in `$QT_BIN`, the `qtpaths6` host directories and `/usr/lib/qt6/bin`.
 
 ## Everyday loop
 
 ```sh
 make link            # once: symlink package/ into ~/.local/share/plasma/plasmoids/<id>
-# edit QML ...
-make run             # plasmoidviewer on package/ (fast; no panel)
-make restart-plasma  # reload the copy that lives in your real panel
+make run             # plasmoidviewer on package/
+make restart-plasma  # reload the copy in your real panel
 ```
 
-`plasmoidviewer` options worth knowing:
-- `plasmoidviewer -a package -f horizontal`, or `-f vertical`, shows the
-  panel form factors;
-- `-l bottomedge` sets the panel location;
-- `-s 400x300` sets the window size.
+| `plasmoidviewer -a package` option | Effect |
+|---|---|
+| `-f horizontal`, `-f vertical` | panel form factor |
+| `-l bottomedge` | panel location |
+| `-s 400x300` | window size |
 
-Use `make install` or `make upgrade` instead of `make link` to test exactly
-what ships, compiled translations included.
+`make link` does not compile translations. `make install` or `make upgrade`
+installs what ships.
 
 ## Debugging
 
-- **Plasma's log:** `journalctl --user -f -g powersupplymeter`.
-  `plasmoidviewer` prints QML warnings to the terminal.
-- **QML errors after editing:** run `make lint` first. It catches most
-  typos, unknown properties and broken imports before Plasma loads anything.
-- **Settings not saving:** check that the page's `cfg_<key>` name matches
-  `main.xml`. The `ConfigurationTest` tests check this.
-- **Leftover logging:** don't leave `console.log` in shipped code.
+- Log: `journalctl --user -f -g powersupplymeter`; `plasmoidviewer` logs to
+  the terminal.
+- QML errors: `make lint`.
+- Settings not saving: the page's `cfg_<key>` must match `main.xml`
+  (`ConfigurationTest`).
 
 ## Profiling
 
-- **CPU at idle:** `pidstat -p $(pgrep -x plasmashell) 5` with and without
-  the widget. Each poll spawns one short-lived `grep`; set the interval to 1 s
-  to see it in `top` or with `perf trace -s`.
-- **QML:** run `QSG_RENDER_TIMING=1 plasmoidviewer -a package` for scene
-  graph timings. Alternatively, start it with
-  `-qmljsdebugger=port:3768,block` and attach the QML Profiler from Qt
-  Creator to see binding and JavaScript costs.
-- **Memory:** use `heaptrack plasmoidviewer -a package` and compare against
-  an empty `plasmoidviewer` run.
+- CPU at idle: `pidstat -p $(pgrep -x plasmashell) 5` with and without the
+  widget. Each poll spawns one `grep`; at a 1 s interval it shows in `top` or
+  `perf trace -s`.
+- Scene graph timings: `QSG_RENDER_TIMING=1 plasmoidviewer -a package`.
+- Binding and JavaScript costs: start with
+  `-qmljsdebugger=port:3768,block` and attach Qt Creator's QML Profiler.
+- Memory: `heaptrack plasmoidviewer -a package` against an empty
+  `plasmoidviewer`.
 
-Do not quote performance numbers in docs unless you measured them on stated
-hardware.
+Quote performance numbers in docs only with the hardware they were measured
+on.
 
 ## Tests
 
-| Layer | What | How |
+| Layer | Covers | Command |
 |---|---|---|
-| Static | QML lint and format, kcfg XML, metadata JSON, shellcheck, REUSE, translation template up to date | `make lint format-check translations-check reuse` |
-| Automated | metadata and schema consistency, settings pages against schema, package contents, reproducibility, tag check, `init.py` | `python3 -m unittest discover -s tests -v` |
-| Automated (QML) | sysfs parser; gauge clamping, click and keyboard toggling, panel sizing, accessibility | `qmltestrunner -input tests/qml` (offscreen) |
-| Runtime smoke | the release `.plasmoid` installs and loads in a real plasmashell. Checked placements: 24 and 64 px panels, a vertical panel, the desktop, and two instances with different settings. Fails on any widget warning in the log | `make smoke` (headless; screenshots in `build/smoke/` for review). Not in CI: it needs KWin and plasmashell |
-| Manual | see the matrix below | |
+| Static | QML lint and format, kcfg XML, metadata JSON, shellcheck, REUSE, translation template | `make lint format-check translations-check reuse` |
+| Python | metadata, settings pages against the schema, package contents and reproducibility, tag check, `init.py` | `make test` |
+| QML | sysfs parser; gauge clamping, click and keyboard toggling, panel sizing, warning colour, accessibility | `make test` (offscreen) |
+| Smoke | the `.plasmoid` in a headless plasmashell: 24 and 64 px panels, two instances with different settings, vertical panel, desktop, 150 % scaling if the virtual output allows it | `make smoke` |
+| Manual | matrix below | |
+
+`make check` (what CI runs) is the first three layers plus `make package`.
+
+`make smoke`:
+
+- Installs `dist/*-<version>.plasmoid`, built only if missing: run
+  `make package` first after edits.
+- Fails on any plasmashell log line naming the widget.
+- Writes screenshots and `plasmashell.log` to `build/smoke/`. Review the
+  screenshots; `scale-150-skipped.txt` means scaling was not tested.
 
 ### Manual test matrix
 
-Run before each release and note the Plasma version and session type used.
-Items marked *(smoke)* are covered by `make smoke`; review its screenshots
-instead of repeating them by hand.
+Run before each release. Note the Plasma version and session type.
+*(smoke)*: review the `make smoke` screenshot instead.
 
 - [ ] Fresh install from the `.plasmoid`, add to panel, remove, uninstall
 - [ ] Upgrade from the previous release keeps settings
-- [ ] `make restart-plasma`: widget comes back with its settings
-- [ ] Horizontal panel at 24, 36 and 64 px; vertical panel *(smoke)*
-- [ ] On the desktop: gauge scales with the widget size *(smoke)*, popup opens
+- [ ] `make restart-plasma`: widget returns with its settings
+- [ ] Horizontal panel at 24 and 64 px *(smoke)* and 36 px; vertical panel *(smoke)*
+- [ ] Desktop: gauge scales with the widget size *(smoke)*, popup opens
 - [ ] Breeze light, Breeze dark, one third-party Plasma theme, a custom accent colour
-- [ ] Fractional scaling (125 % or 150 %): ring and label are crisp, not clipped
+- [ ] Fractional scaling (125 % or 150 %): ring and label crisp, not clipped
 - [ ] Two instances with different full scale and colours stay independent *(smoke)*
 - [ ] Settings: Apply, Cancel, Defaults, reopen; custom font survives reopening
 - [ ] Keyboard: Tab to the gauge, focus ring visible, Space or Enter toggles the popup
 - [ ] Screen reader (Orca) announces name and status
-- [ ] Unplug the charger: "—", tooltip "No external power"; plug back in: value returns
-- [ ] Charger that does not report a rating: "rating not reported"
-- [ ] Heavy load on a weak charger (battery `Discharging` while plugged in):
-      after two polls the arc turns red, tooltip and popup show the drain line,
-      a widget in the tray's hidden area moves out; with the setting off only
-      the line shows. At a charge threshold (`Not charging`) nothing warns
+- [ ] Unplug the charger: "—", tooltip "No external power"; plug in: value returns
+- [ ] Charger without a reported rating: "rating not reported"
+- [ ] Battery `Discharging` while plugged in (heavy load, weak charger):
+      after two polls the arc turns red, tooltip and popup show the drain
+      line, a widget in the tray's hidden area moves out. With the setting
+      off, only the line shows. `Not charging` (charge threshold): no warning
 - [ ] Wayland and X11 sessions
-- [ ] Right-to-left language (e.g. `LANGUAGE=ar plasmoidviewer -a package`): layout mirrors sensibly
+- [ ] Right-to-left language (`LANGUAGE=ar plasmoidviewer -a package`): layout mirrors
 
 ## Translations
 
 ```sh
 make translations                  # regenerate po/*.pot, merge into po/*.po
-scripts/translations.sh new uk     # start a Ukrainian catalog
+scripts/translations.sh new uk     # start po/uk.po
 make translations-check            # template current, catalogs valid
 ```
 
-Translators edit `po/<lang>.po` with any PO editor (Lokalize, Poedit).
-`make package` compiles the catalogs into the archive.
-
-To check a translation, `make install` and then run
+To check a translation: `make install`, then
 `LANGUAGE=uk plasmawindowed io.github.filiurskyi.powersupplymeter`.
-
-Do not add machine-generated translations.
 
 ## Packaging
 
-`make package` writes `dist/power-supply-meter-<version>.plasmoid` and a
-`.sha256` file.
-- The archive is a zip with `metadata.json` at its root.
-- Entries are sorted, permissions fixed and timestamps set to the last
-  commit time, so rebuilding the same commit gives identical bytes.
-- `python3 scripts/package.py verify FILE` checks any archive against the
-  allow-list.
+`make package` writes `dist/power-supply-meter-<version>.plasmoid` and
+`.plasmoid.sha256`, with `po/*.po` compiled in. The same commit always gives
+identical bytes. `python3 scripts/package.py verify FILE` checks any archive
+against the allow-list.
 
 ## Releasing
 

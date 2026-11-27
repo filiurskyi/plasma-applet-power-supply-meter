@@ -1,7 +1,7 @@
 # Screenshots
 
-Screenshots are taken in a throwaway, headless Plasma session, so your real
-desktop, its windows and its settings are never captured or changed.
+`make screenshots` runs in a throwaway, headless Plasma session. Your
+desktop is neither captured nor changed.
 
 ```sh
 make screenshots                                   # Breeze light + dark into screenshots/
@@ -9,58 +9,44 @@ THEMES=org.kde.breezedark.desktop scripts/screenshots.sh /tmp/shots
 SIZE=1920x1080 PANEL_HEIGHT=56 make screenshots
 ```
 
-## How it works
+| Variable | Default | |
+|---|---|---|
+| `THEMES` | `org.kde.breeze.desktop org.kde.breezedark.desktop` | look-and-feel themes, space-separated |
+| `SIZE` | `1280x800` | virtual screen |
+| `PANEL_HEIGHT` | `44` | |
+| `PACKAGE` | `package/` | directory or `.plasmoid` to install |
+| `KEEP_SANDBOX` | unset | `1` keeps the temporary directory; plasmashell's log is `state/plasmashell.log` in it |
 
-1. `scripts/sandbox.sh`, which `scripts/screenshots.sh` and `scripts/smoke.sh` share,
-   creates a temporary directory and points
-   `XDG_CONFIG_HOME`, `XDG_DATA_HOME`, `XDG_CACHE_HOME` and `XDG_STATE_HOME`
-   into it. It then installs the widget there with `kpackagetool6`.
-2. `dbus-run-session` starts a private session bus. In it,
-   `kwin_wayland --virtual` starts a compositor that renders into memory,
-   not to a screen.
-3. Inside that session, `scripts/screenshots-session.sh`:
-   1. applies the look-and-feel theme;
-   2. starts `plasmashell`, which creates its default panel;
-   3. adds the widget to the panel through the Plasma scripting D-Bus API;
-   4. takes `<theme>-panel.png` with `spectacle --background --fullscreen`;
-   5. opens the popup through the widget's global shortcut (via
-      kglobalaccel's D-Bus `invokeShortcut`), then takes `<theme>-popup.png`.
-   6. If Python's PIL is installed, the script also crops
-      `<theme>-closeup.png` (the panel corner with the popup open) from each
-      popup shot. The README uses these crops, because the gauge is tiny in a
-      full-desktop shot.
-4. Afterwards the script stops the daemons D-Bus started inside the sandbox
-   (portal, ksecretd, activity manager) and deletes the directory. Set
-   `KEEP_SANDBOX=1` to keep it. `state/plasmashell.log` then has the QML
-   warnings from the run, which makes this a useful runtime smoke test too.
+Output per theme (`breeze`, `breezedark`):
 
-The values shown are read from **this machine's** sysfs, so plug in the
-charger you want to show.
+| File | Shows |
+|---|---|
+| `<theme>-panel.png` | full desktop |
+| `<theme>-popup.png` | full desktop, popup open |
+| `<theme>-closeup.png` | bottom-right 600×200 crop of the popup shot; needs Python PIL |
 
-## Manual shots
+Values come from this machine's sysfs: plug in the charger you want to show.
 
-The settings dialog is not part of `make screenshots`: Plasma's scripting
-`showConfigurationInterface()` does nothing in the headless session. Take it
-on your own desktop instead:
+## Settings dialog
 
-1. Right-click the widget, then **Configure Power Supply Meter…**
-2. With the dialog focused, press <kbd>Meta</kbd>+<kbd>Print</kbd> (Spectacle,
-   active window), or run `spectacle --activewindow --background --delay 3000
-   --output screenshots/settings-general.png` and focus the dialog within 3 s.
+Not captured by `make screenshots`: it cannot be opened in the headless
+session. Take it on your own desktop:
 
-`spectacle --activewindow` captures whatever window has focus. Check every
-image before committing it, so no unrelated windows or personal data end up
-in the repository.
+1. Right-click the widget, **Configure Power Supply Meter…**
+2. With the dialog focused, press <kbd>Meta</kbd>+<kbd>Print</kbd>, or run
+   the command below and focus the dialog within 3 s.
 
-To keep your desktop out of the shot entirely, you can open the dialog in
-the sandbox: make a temporary copy of `package/` whose `main.qml` calls
-`Plasmoid.internalAction("configure").trigger()` shortly after start-up, and
-pass that copy to `scripts/sandbox.sh` with `PACKAGE=`. Don't commit that
-change.
+```sh
+spectacle --activewindow --background --delay 3000 --output screenshots/breezedark-settings.png
+```
 
-## For the KDE Store
+`--activewindow` captures whichever window has focus. Check every image for
+unrelated windows and personal data before committing.
 
-- Use PNG, at least one image showing the gauge at a readable size: crop the
-  panel shot or use a larger `PANEL_HEIGHT`.
-- Show light and dark themes, the popup, and the settings page.
-- Commit the final images to `screenshots/` and reference them from README.
+## KDE Store
+
+- PNG. At least one image must show the gauge at a readable size: use the
+  close-up or a larger `PANEL_HEIGHT`.
+- Show light and dark themes, the popup and the settings page.
+- Commit final images to `screenshots/`. The upload order is in
+  [STORE_LISTING.md](STORE_LISTING.md).
