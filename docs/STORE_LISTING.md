@@ -51,4 +51,4 @@ Details: https://github.com/filiurskyi/plasma-applet-power-supply-meter/blob/mai
 
 ## Changelog field
 
-Paste the matching section of CHANGELOG.md.
+Paste the GitHub release notes.

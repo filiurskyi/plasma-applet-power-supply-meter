@@ -112,12 +112,12 @@ Validation happens in three places:
   `Component.onCompleted`:
   - only when the new key still has its default value;
   - write the converted value with `Plasmoid.configuration.newKey = …`;
-  - record it in CHANGELOG.md.
+  - mention it in the release notes.
 - **Removing a key.** Remove it from `main.xml` only after at least one
   release in which it is unused.
 
 Do not store credentials in `main.xml`; use the Secret Service (KWallet) via a
-native backend if a future widget needs them. Extra data, cache or runtime
+native backend if a widget ever needs them. Extra data, cache or runtime
 files belong in the XDG directories
 (`$XDG_DATA_HOME`, `$XDG_CACHE_HOME`, `$XDG_RUNTIME_DIR`), never inside the
 installed package, which must be treated as read-only.
@@ -135,7 +135,7 @@ installed package, which must be treated as read-only.
 - `metadata.json` names and descriptions can be translated by adding
   `Name[<lang>]` and `Description[<lang>]` keys.
 
-## Native backends (future)
+## Native backends
 
 If a widget ever needs compiled code, ship it separately from the
 `.plasmoid`:

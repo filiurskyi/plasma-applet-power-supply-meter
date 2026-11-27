@@ -51,9 +51,8 @@ repository. Details live in `docs/`; this file only lists what you must do.
    `Accessible.name`. Use theme colours and units, not hard-coded values.
 5. **Continuous running.** This code runs all session long: no new timers,
    polling, logging or work on every poll unless it is necessary.
-6. **Behaviour changes.** Update the tests in `tests/`, the docs and the
-   "Unreleased" section of `CHANGELOG.md`. Run `make translations` when
-   strings change.
+6. **Behaviour changes.** Update the tests in `tests/` and the docs. Run
+   `make translations` when strings change.
 7. **Commands.** Never build shell commands from settings or external data
    (see `SECURITY.md`).
 

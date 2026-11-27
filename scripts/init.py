@@ -5,8 +5,8 @@
 
 Run it once in a fresh clone (e.g. made with GitHub's "Use this template").
 It rewrites the plugin id, name, author, URLs, licence and other identifiers
-everywhere they occur, renames the translation template and resets the
-changelog. Missing options are asked for interactively.
+everywhere they occur, and renames the translation template. Missing
+options are asked for interactively.
 
 Safety: it refuses to run on a dirty git tree (so every change can be
 reviewed with `git diff` and undone with `git checkout .`), never deletes
@@ -15,7 +15,6 @@ would change without writing anything.
 """
 
 import argparse
-import datetime
 import json
 import re
 import subprocess
@@ -161,13 +160,11 @@ def apply(old, new, dry_run):
 
     old_pot = REPO / "po" / f"plasma_applet_{old['plugin_id']}.pot"
     new_pot = REPO / "po" / f"plasma_applet_{new['plugin_id']}.pot"
-    changelog = REPO / "CHANGELOG.md"
     if dry_run:
         for path in changed:
             print(f"would update {path.relative_to(REPO)}")
         if old_pot != new_pot and old_pot.exists():
             print(f"would rename {old_pot.relative_to(REPO)} -> {new_pot.relative_to(REPO)}")
-        print("would reset CHANGELOG.md")
         return
 
     METADATA.write_text(json.dumps(meta, indent=4, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
@@ -176,12 +173,6 @@ def apply(old, new, dry_run):
     if old["license"] != new["license"]:
         (REPO / "LICENSE").write_text((REPO / "LICENSES" / f"{new['license']}.txt").read_text(encoding="utf-8"),
                                       encoding="utf-8")
-    changelog.write_text(
-        "# Changelog\n\nAll notable changes are documented here. The format follows\n"
-        "[Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses\n"
-        "[Semantic Versioning](https://semver.org/).\n\n## [Unreleased]\n\n"
-        f"### Added\n\n- Initial widget, created from the template on {datetime.date.today().isoformat()}.\n",
-        encoding="utf-8")
     for path in changed:
         print(f"updated {path.relative_to(REPO)}")
     print("\nDone. Review with `git diff`, then replace the example code, README text and screenshots.")

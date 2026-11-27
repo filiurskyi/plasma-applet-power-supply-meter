@@ -66,10 +66,6 @@ class MetadataTest(unittest.TestCase):
     def test_category_is_known(self):
         self.assertIn(self.plugin["Category"], load_script("init").CATEGORIES)
 
-    def test_changelog_mentions_version_or_unreleased(self):
-        changelog = (REPO / "CHANGELOG.md").read_text(encoding="utf-8")
-        self.assertTrue(f"## [{self.plugin['Version']}]" in changelog or "## [Unreleased]" in changelog)
-
 
 class ConfigurationTest(unittest.TestCase):
     def setUp(self):

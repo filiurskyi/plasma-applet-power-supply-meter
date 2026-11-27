@@ -9,7 +9,6 @@ publish anything.
 - [ ] Version bumped in `package/metadata.json` (semantic versioning: patch
       for fixes, minor for features, major for breaking setting changes or
       dropped Plasma versions)
-- [ ] `CHANGELOG.md`: move "Unreleased" entries under `## [X.Y.Z] - YYYY-MM-DD`
 - [ ] `make translations` run; no stale template
 - [ ] README requirements and docs/COMPATIBILITY.md state what was actually tested for this
       release; new QML imports or sysfs attributes are listed there
@@ -57,7 +56,7 @@ publish anything.
 
 - [ ] Commit, then `git tag vX.Y.Z` and push the tag
 - [ ] Release workflow: tag matches metadata, checks pass, the GitHub release
-      has the `.plasmoid` and `.sha256`
+      has the `.plasmoid` and `.sha256`; edit its generated notes
 - [ ] KDE Store (https://store.kde.org/p/2382745): upload the `.plasmoid`
       from the GitHub release (its MD5 on the Files tab must match), set the
       file version, and update the product version, changelog and

@@ -37,7 +37,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          version="${GITHUB_REF_NAME#v}"
-          notes=$(awk -v v="$version" '$0 ~ "^## \\[" v "\\]" {found=1; next} found && /^## \[/ {exit} found' CHANGELOG.md)
           gh release create "$GITHUB_REF_NAME" dist/*.plasmoid dist/*.plasmoid.sha256 \
-            --title "$GITHUB_REF_NAME" --notes "${notes:-See CHANGELOG.md}" --verify-tag
+            --title "$GITHUB_REF_NAME" --generate-notes --verify-tag

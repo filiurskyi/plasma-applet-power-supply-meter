@@ -35,7 +35,7 @@ The "Verified" notes say how each rule was checked, on 2026-11-25.
 | Theme values (`Kirigami.Theme.*`, `Kirigami.Units.*`) instead of hard-coded colours and sizes | Official | [KDE HIG](https://develop.kde.org/hig/) |
 | Avoid Qt5Compat (`GraphicalEffects`); outline the label with `Text.Outline` | Official | Qt5Compat exists only for porting |
 | Plasma5Support "executable" engine for reading sysfs | Project (justified exception) | Plasma 5 data engines are deprecated, but nothing in Plasma 6 or UPower exposes the PD rating (checked over UPower D-Bus, the ksystemstats `power` and `lmsensors` plugins, and the `powermanagement` engine). The alternative is a compiled plugin, which would make the package architecture-dependent |
-| Control paddings set individually (`leftPadding: 0` etc.) | Project | the Plasma style sets the side paddings explicitly, so `padding: 0` has no effect (the ring rendered as a 14 px disc) |
+| Control paddings set individually (`leftPadding: 0` etc.) | Project | the Plasma style sets the side paddings explicitly, so `padding: 0` has no effect and the gauge shrinks |
 
 ## Formatting and linting
 
@@ -60,7 +60,7 @@ The "Verified" notes say how each rule was checked, on 2026-11-25.
 | Rule | Class | Source / verification |
 |---|---|---|
 | SPDX headers in every source file; `REUSE.toml` for JSON, images and docs | Official | [REUSE 3.3](https://reuse.software/spec/), KDE uses REUSE; `reuse lint` in CI |
-| GPL-3.0-or-later | Project | the author chose it on 2026-11-25 (pre-release was GPL-2.0-or-later) |
+| GPL-3.0-or-later | Project | the author's choice |
 | Licence text shipped inside the `.plasmoid` (`contents/LICENSES/`) | Project | GPL-3.0 §4–6 require a copy of the licence with distributed copies |
 
 ## Distribution and releases
@@ -69,7 +69,6 @@ The "Verified" notes say how each rule was checked, on 2026-11-25.
 |---|---|---|
 | Content follows the KDE Store publishing terms (own work or compatible licence, no malware, accurate description) | Required | [store.kde.org/terms/publishing](https://store.kde.org/terms/publishing) |
 | Semantic versioning; tags `vX.Y.Z` equal to `metadata.json` Version | Project | enforced by `scripts/package.py check-tag` in the release workflow |
-| Keep a Changelog format | Community | CHANGELOG.md |
 | Commit titles in Conventional Commits style (`type(scope): description`), title line only | Project | AGENTS.md; Dependabot uses the `ci` prefix |
 | GitHub Actions pinned to commit SHAs, least-privilege `permissions` | Official (GitHub) | GitHub security hardening guide; Dependabot keeps the pins current |
 | No automated KDE Store upload | Project | no supported, documented upload API was found; publish by hand |

@@ -39,13 +39,9 @@ charger you want to show.
 
 ## Manual shots
 
-Plasma's scripting `showConfigurationInterface()` does nothing in the
-headless session, so the settings dialog is not part of `make screenshots`.
-`screenshots/breezedark-settings.png` was taken in the sandbox from a
-temporary copy of `package/` whose `main.qml` triggered
-`Plasmoid.internalAction("configure")` from a 2.5 s timer, passed to
-`scripts/sandbox.sh` with `PACKAGE=`; never commit that change. Or take it on
-your own desktop:
+The settings dialog is not part of `make screenshots`: Plasma's scripting
+`showConfigurationInterface()` does nothing in the headless session. Take it
+on your own desktop instead:
 
 1. Right-click the widget, then **Configure Power Supply Meter…**
 2. With the dialog focused, press <kbd>Meta</kbd>+<kbd>Print</kbd> (Spectacle,
@@ -55,6 +51,12 @@ your own desktop:
 `spectacle --activewindow` captures whatever window has focus. Check every
 image before committing it, so no unrelated windows or personal data end up
 in the repository.
+
+To keep your desktop out of the shot entirely, you can open the dialog in
+the sandbox: make a temporary copy of `package/` whose `main.qml` calls
+`Plasmoid.internalAction("configure").trigger()` shortly after start-up, and
+pass that copy to `scripts/sandbox.sh` with `PACKAGE=`. Don't commit that
+change.
 
 ## For the KDE Store
 

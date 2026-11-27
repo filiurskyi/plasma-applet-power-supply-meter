@@ -16,8 +16,7 @@ process is light.
    [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) has the details.
 3. If you change user-visible strings, run `make translations`.
 4. Before pushing, run `make check`; CI runs the same command.
-5. Add an entry under "Unreleased" in `CHANGELOG.md`.
-6. Write commit titles in [Conventional Commits](https://www.conventionalcommits.org/)
+5. Write commit titles in [Conventional Commits](https://www.conventionalcommits.org/)
    style, e.g. `fix(popup): grow when content outgrows the remembered size`.
 
 ## Expectations
