@@ -25,17 +25,8 @@ primary source.
 | `org.kde.plasma.{plasmoid,core,components,configuration}` | `plasma-desktoptheme` | | Plasma integration |
 | `kcm_energyinfo` (optional) | `kinfocenter` | | "Show Energy Information…" action |
 
-Debian/Ubuntu names: `dpkg -S` on Kubuntu 26.04. Arch names: archlinux.org
-package data.
-
-The command reads these attributes of every `/sys/class/power_supply/*`
-entry, skipping missing ones: `online`, `voltage_max`, `voltage_max_design`,
-`current_max`, `type`, `scope`, `status`, `power_now`, `current_now`,
-`voltage_now`.
-
-`Qt.labs.platform.FontDialog` has no Plasma-native implementation; Qt falls
-back to the Qt Widgets `QFontDialog`, which works because plasmashell is a
-`QApplication`.
+The sysfs attributes it reads are in
+[the command](../SECURITY.md#what-the-widget-does); missing ones are skipped.
 
 ## If the widget shows an error instead of the gauge
 
@@ -103,9 +94,6 @@ Linux…".
 of Ubuntu 26.04 (checked locally), Debian trixie, Fedora, Arch, openSUSE
 Tumbleweed and SL-16.0, Void, and Gentoo's dist-kernel (Fedora's config).
 NixOS: *unverified*. Alpine x86_64: not enabled.
-
-The drain warning needs only the battery's `status`, so it works without
-UCSI.
 
 ## Sources
 

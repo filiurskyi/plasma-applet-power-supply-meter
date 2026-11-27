@@ -29,8 +29,8 @@ make restart-plasma  # reload the copy in your real panel
 | `-l bottomedge` | panel location |
 | `-s 400x300` | window size |
 
-`make link` does not compile translations. `make install` or `make upgrade`
-installs what ships.
+`make link` runs without compiled translations; `make install` or
+`make upgrade` installs what ships.
 
 ## Debugging
 

@@ -9,7 +9,7 @@ Report privately at
 Do not open a public issue.
 
 Include the widget version, the Plasma version and steps to reproduce.
-Acknowledgement within 14 days; fixes have no fixed timeline.
+Acknowledgement within 14 days.
 
 ## What the widget does
 

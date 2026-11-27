@@ -13,8 +13,9 @@ Only the maintainer releases. Agents and scripts never push tags or publish.
 - [ ] No network access, telemetry or new external command; if one was
       added, SECURITY.md justifies it and its argument list is fixed
 - [ ] No secrets, tokens or personal data in the repository or archive
-- [ ] [COMPATIBILITY.md](COMPATIBILITY.md) states what
-      was tested for this release and list new QML imports and sysfs attributes
+- [ ] [COMPATIBILITY.md](COMPATIBILITY.md) states what was tested and lists
+      new QML imports; the command in [SECURITY.md](../SECURITY.md) matches
+      `supply.js`
 
 ## 2. Test
 

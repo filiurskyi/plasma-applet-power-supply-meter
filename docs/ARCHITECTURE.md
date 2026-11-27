@@ -1,9 +1,8 @@
 # Architecture
 
 `package/` is the `.plasmoid` root. `scripts/package.py` copies it, adds the
-licence text and compiled translations
-(`po/<lang>.po` → `contents/locale/<lang>/LC_MESSAGES/plasma_applet_<plugin id>.mo`),
-and rejects any file not on its allow-list.
+licence text and compiled translations, and rejects any file not on its
+allow-list.
 
 ## Components
 
@@ -59,18 +58,20 @@ Paths are relative to `package/contents/`.
 
 ### Why polling
 
-Neither Plasma nor UPower exposes the negotiated PD rating:
+Neither Plasma nor UPower exposes the negotiated PD rating, so the widget
+polls sysfs through the Plasma5Support "executable" engine:
 
 - UPower's line-power objects only expose `Online`.
-- The ksystemstats sensors set the hwmon maximum once and never refresh it.
+- The ksystemstats `power` and `lmsensors` sensors set the hwmon maximum
+  once and never refresh it.
+- The `powermanagement` engine has no rating either.
+
+A compiled plugin would make the `.plasmoid` architecture-dependent.
 
 ## Configuration
 
 - `config/main.xml` defines the keys. Plasma stores the values per instance
   in `~/.config/plasma-org.kde.plasma.desktop-appletsrc`.
-- QML reads them as `Plasmoid.configuration.<key>`.
-- The settings dialog handles Apply, Cancel and Defaults through the pages'
-  `cfg_<key>` properties.
 - Bounds are set in three places: `<min>`/`<max>` in the schema, `from`/`to`
   on the spin boxes (`tests/test_repository.py` checks they agree), and
   clamping in the gauge.

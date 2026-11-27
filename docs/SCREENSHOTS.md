@@ -1,7 +1,6 @@
 # Screenshots
 
-`make screenshots` runs in a throwaway, headless Plasma session. Your
-desktop is neither captured nor changed.
+`make screenshots` runs in a throwaway, headless Plasma session.
 
 ```sh
 make screenshots                                   # Breeze light + dark into screenshots/
@@ -42,11 +41,3 @@ spectacle --activewindow --background --delay 3000 --output screenshots/breezeda
 
 `--activewindow` captures whichever window has focus. Check every image for
 unrelated windows and personal data before committing.
-
-## KDE Store
-
-- PNG. At least one image must show the gauge at a readable size: use the
-  close-up or a larger `PANEL_HEIGHT`.
-- Show light and dark themes, the popup and the settings page.
-- Commit final images to `screenshots/`. The upload order is in
-  [STORE_LISTING.md](STORE_LISTING.md).

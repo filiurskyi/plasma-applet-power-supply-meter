@@ -84,29 +84,18 @@ colour and tray visibility stay unchanged.
 
 ## Known limitations
 
-- Shows what the charger offers, not what the laptop draws.
-- No wattage on hardware without `voltage_max`/`current_max`.
 - The drain warning needs the battery to report `Discharging` and appears
   after two consecutive polls. Discharge power needs `power_now`, or
   `current_now` and `voltage_now`.
-- Each poll spawns a `grep` process: neither Plasma nor UPower exposes the
-  negotiated rating.
+- Each poll spawns a short `grep` process
+  ([why](docs/ARCHITECTURE.md#why-polling)).
 
 ## Development
 
-```sh
-make doctor     # which tools are installed
-make link       # symlink package/ into ~/.local/share/plasma/plasmoids
-make check      # everything CI runs
-make package    # dist/power-supply-meter-<version>.plasmoid
-```
-
 [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md),
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md),
-[CONTRIBUTING.md](CONTRIBUTING.md).
-
-To reuse the repository as a template for a new widget, run `make init` in a
-fresh copy.
+[CONTRIBUTING.md](CONTRIBUTING.md). To start a new widget from this
+repository, run `make init` in a fresh copy.
 
 ## License
 

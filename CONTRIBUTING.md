@@ -4,22 +4,19 @@ Open an issue before anything bigger than a fix. One topic per pull request.
 
 ## Workflow
 
-1. `make doctor`, then install the tools it lists as missing.
-2. `make link` once; then edit and `make run` or `make restart-plasma`. See
-   [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
-3. `make translations` if user-visible strings changed.
-4. `make check` before pushing; CI runs the same command.
+Set up and test as in [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Before
+pushing, run `make translations` if user-visible strings changed, then
+`make check`.
 
 ## Rules
 
-- **APIs:** public Plasma 6, KDE Frameworks 6 and Qt 6 only. Follow
-  [docs/CONVENTIONS.md](docs/CONVENTIONS.md).
+- **APIs and style:** public Plasma 6, KDE Frameworks 6 and Qt 6 only.
+  Follow [docs/CONVENTIONS.md](docs/CONVENTIONS.md), including its i18n and
+  theme rules.
 - **Settings:** never rename or retype an existing `main.xml` key. See
   [Changing settings](docs/ARCHITECTURE.md#changing-settings-without-losing-users-values).
-- **Strings:** every user-visible string goes through `i18n*()` with
-  placeholders, never concatenation.
 - **Accessibility:** interactive items need keyboard access and an
-  `Accessible.name`. Use theme colours and units.
+  `Accessible.name`.
 - **Performance:** no new timers, polling or logging unless necessary.
 - **Security:** follow the rules in [SECURITY.md](SECURITY.md).
 - **Tests:** update `tests/` for changed behaviour. State in the pull request
